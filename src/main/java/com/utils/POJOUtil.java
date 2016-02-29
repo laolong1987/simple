@@ -38,23 +38,23 @@ public class POJOUtil {
 	private String password = null; // 密码
 	private String tableName = null; // 表明
 	private String filename="";
-	
+
 	public POJOUtil(String packageName, String url, String table,
-			String password, String tableName,String filename) {
+					String password, String tableName,String filename) {
 		this.packageName = packageName;
 		this.url = url;
 		this.table = table;
 		this.password = password;
 		this.tableName = tableName;
 		this.filename=filename;
-		f = new File(filename);
-		if (!f.exists()) { // 如果文件不存在则建立文件
-			try {
-				f.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+//		f = new File(filename);
+//		if (!f.exists()) { // 如果文件不存在则建立文件
+//			try {
+//				f.createNewFile();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 	private String getCoding(StringBuffer code) {
@@ -76,11 +76,11 @@ public class POJOUtil {
 		return coding;
 
 	}
-	
+
 	private String gettype(String type){
 		String t="";
-		System.out.println(type);
-		if("INTEGER".equals(type) || "INT".equals(type)){
+		System.out.println("-----"+type);
+		if("INTEGER".equals(type) || "INT".equals(type) || "INT UNSIGNED".equals(type)){
 			t="int";
 		}else if("VARCHAR".equals(type)){
 			t="String";
@@ -93,7 +93,7 @@ public class POJOUtil {
 		}
 		return t;
 	}
-	
+
 	private StringBuffer generate2(String property,String type) {
 		String prop = property.toLowerCase();
 		String t=gettype(type);
@@ -108,7 +108,7 @@ public class POJOUtil {
 		return coding;
 
 	}
-	
+
 
 	private void destroy() {
 		/*
@@ -208,7 +208,7 @@ public class POJOUtil {
 	}
 
 
-	
+
 	private List<Map<String, String>> getColumenName() {
 		/*
 		 * 得到表的所有列名以字符串数组的形式返回
@@ -218,10 +218,10 @@ public class POJOUtil {
 		try {
 			count = meta.getColumnCount();
 			for (int i = 1; i <= count; i++) {
-			  Map map=new HashMap<String, String>();
-			  map.put("type", meta.getColumnTypeName(i));
-			  map.put("name", meta.getColumnName(i));
-			  s.add(map);
+				Map map=new HashMap<String, String>();
+				map.put("type", meta.getColumnTypeName(i));
+				map.put("name", meta.getColumnName(i));
+				s.add(map);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -258,15 +258,15 @@ public class POJOUtil {
 		imp.append("@Table(name = \"").append(tableName).append("\")\n");
 		return imp;
 	}
-	
+
 	public static void main(String[] args) {
-		String url="jdbc:mysql://127.0.0.1:3306/sgmew"; //数据库连接地址
+		String url="jdbc:mysql://115.28.133.104:3306/medical"; //数据库连接地址
 		String username="root"; //数据库登录名
-		String pwd="";//数据库密码
-		String tablename="bo_bonusdetail"; //表名
+		String pwd="Muuu2015";//数据库密码
+		String tablename="demo"; //表名
 		String file="C:\\data.java";  //输出文件
-		
-		
+
+
 		POJOUtil ta = new POJOUtil("com.mysql.jdbc.Driver",url, username, pwd,tablename,file);
 		ta.connect();
 		List<Map<String, String>> s=new ArrayList<Map<String,String>>();
@@ -278,8 +278,9 @@ public class POJOUtil {
 			ta.generate2(map.get("name"),map.get("type"));
 		}
 		coding.append("}");
-		ta.writeData(ta.getimp().toString()+coding);
-		ta.destroy();
+		System.out.println(ta.getimp().toString()+coding);
+//		ta.writeData(ta.getimp().toString()+coding);
+//		ta.destroy();
 		System.out.println("--文件已生成----地址："+file);
 	}
 
