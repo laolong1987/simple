@@ -19,7 +19,7 @@
     <dd>name:<input id="name" name="name" type="text"></dd>
     <dd><input type="submit" title="提交"/><input type="reset" title="重置"/></dd>
 </dl>
-
+</form>
     <dl>
         <dt>查询</dt>
         <c:forEach items="${list}" var="l">
@@ -29,7 +29,13 @@
             </dd>
         </c:forEach>
     </dl>
-</form>
+
+
+<dl>
+    <dt>ajax提交</dt>
+     <input type="button" value="save" onclick="save('1','zhangsan')" title="删除"/>
+
+</dl>
 </body>
 <script type="text/javascript" src='../js/jquery.min.js'></script>
 <script type="text/javascript">
@@ -48,6 +54,19 @@
     function update(id,name){
         $("#id").val(id);
         $("#name").val(name);
+    }
+
+    function save(id,name){
+            $.ajax({
+                type : "POST",
+                url : "save",
+                data : {'aa':'aa','bb':'bb'},
+                contentType : "application/json; charset=utf-8",
+                dataType : "text",
+                success : function(result) {
+                    alert(222222222);
+                }
+            });
     }
 </script>
 

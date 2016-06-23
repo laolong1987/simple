@@ -6,11 +6,12 @@ import com.web.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by gaoyang on 16/2/28.
@@ -59,4 +60,11 @@ public class DemoController {
 
     }
 
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
+    public String save(@RequestBody Map<String, String> param) {
+        System.out.println(11111111);
+        return "success";
+    }
 }
